@@ -10,7 +10,7 @@
 		<section id="todoapp">
 			<header id="header">
 				<h1>todos</h1>
-				<input id="new-todo" hb-bind="new-item" placeholder="What needs to be done?" autofocus>
+				<input id="new-todo" placeholder="What needs to be done?" autofocus>
 			</header>
 			<section id="main">
 				<input id="toggle-all" type="checkbox">
@@ -20,7 +20,7 @@
 						<div class="view">
 							<input class="toggle" type="checkbox" value="completed" hb-bind="completed">
 							<label>{{task}}</label>
-							<button class="destroy" hb-submit-command="delete"></button>
+							<button class="destroy" hb-get-item></button>
 						</div>
 					</li>
 				</ul>
