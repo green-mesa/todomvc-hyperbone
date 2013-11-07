@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="en" data-framework="backbonejs">
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<title>Backbone.js • TodoMVC</title>
+		<link rel="stylesheet" href="bower_components/todomvc-common/base.css">
+	</head>
+	<body>
+		<section id="todoapp">
+			<header id="header">
+				<h1>todos</h1>
+				<input id="new-todo" placeholder="What needs to be done?" autofocus>
+			</header>
+			<section id="main">
+				<input id="toggle-all" type="checkbox">
+				<label for="toggle-all">Mark all as complete</label>
+				<ul id="todo-list" hb-with="items">
+					<li class="{{completed}}">
+						<div class="view">
+							<input class="toggle" type="checkbox" value="completed" hb-bind="completed">
+							<label>{{task}}</label>
+							<button class="destroy" hb-submit-command="delete"></button>
+						</div>
+					</li>
+				</ul>
+			</section>
+			<footer id="footer">
+				<span id="todo-count"><strong>{{remaining}}</strong> {{pluralise(model.get('remaining'), 'item')}} left</span>
+				<ul id="filters">
+					<li>
+						<a class="selected" href="#/">All</a>
+					</li>
+					<li>
+						<a href="#/active">Active</a>
+					</li>
+					<li>
+						<a href="#/completed">Completed</a>
+					</li>
+				</ul>
+				<button if="completed" id="clear-completed">Clear completed ({{completed}})</button>
+			</footer>
+		</section>
+		<footer id="info">
+			<p>Double-click to edit a todo</p>
+			<p>Written by <a href="https://github.com/addyosmani">Addy Osmani</a></p>
+			<p>Part of <a href="http://todomvc.com">TodoMVC</a></p>
+		</footer>
+		<script src="build/build.js"></script>
+		<script>require('todomvc-hyperbone')</script>
+	</body>
+</html>
