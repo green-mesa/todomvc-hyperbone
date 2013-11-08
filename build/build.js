@@ -166,7 +166,7 @@ require.relative = function(parent) {
    */
 
   function localRequire(path) {
-    var resolved = require.resolve(path);
+    var resolved = localRequire.resolve(path);
     return require(resolved, parent, path);
   }
 
@@ -199,7 +199,7 @@ require.relative = function(parent) {
 
   return localRequire;
 };
-require.register("underscore", function(exports, require, module){
+require.register("components-underscore/underscore.js", function(exports, require, module){
 // Underscore.js 1.4.4
 // ===================
 
@@ -1429,7 +1429,7 @@ require.register("underscore", function(exports, require, module){
 }).call(this);
 
 });
-require.register("backbone-events", function(exports, require, module){
+require.register("green-mesa-backbone-events/index.js", function(exports, require, module){
 //     Backbone.js 1.0.0
 
 //     (c) 2010-2013 Jeremy Ashkenas, DocumentCloud Inc.
@@ -1613,7 +1613,7 @@ var Events = module.exports.Events = {
 
 //Events.extend = require('backbone-helpers').extend;
 });
-require.register("hyperbone-view", function(exports, require, module){
+require.register("green-mesa-hyperbone-view/index.js", function(exports, require, module){
 var _ = require('underscore'),
   dom = require('dom'),
   regex = {
@@ -1688,6 +1688,10 @@ HyperboneView.prototype = {
     this.activateDelegates();
 
     this.trigger('initialised', this.el, this.model);
+
+    if(isNode(this.el.els[0])){
+      this.el.css({'display':'block'});
+    }
 
     return this;
 
@@ -1984,7 +1988,7 @@ _.extend(attributeHandlers, {
 
     var self = this, 
     test = function(){
-      dom(node).css({display: ( self.model.get(prop)!==0 ? '': 'none') });  
+      dom(node).css({display: ( self.model.get(prop) ? '': 'none') });  
     };
 
     this.model.on('change:' + prop, function(){ test() });
@@ -2348,7 +2352,7 @@ function indent(str) {
   return str.replace(/^/gm, '  ');
 }
 });
-require.register("backbone-helpers", function(exports, require, module){
+require.register("green-mesa-backbone-helpers/index.js", function(exports, require, module){
 //     Backbone.js 1.0.0
 
 //     (c) 2010-2013 Jeremy Ashkenas, DocumentCloud Inc.
@@ -2412,7 +2416,7 @@ var wrapError = module.exports.wrapError = function (model, options) {
   };
 };
 });
-require.register("backbone-model", function(exports, require, module){
+require.register("green-mesa-backbone-model/index.js", function(exports, require, module){
 //     Backbone.js 1.0.0
 
 //     (c) 2010-2013 Jeremy Ashkenas, DocumentCloud Inc.
@@ -2779,7 +2783,7 @@ var Model = module.exports.Model = function(attributes, options) {
 
 Model.extend = require('backbone-helpers').extend;
 });
-require.register("backbone-collection", function(exports, require, module){
+require.register("green-mesa-backbone-collection/index.js", function(exports, require, module){
 //     Backbone.js 1.0.0
 
 //     (c) 2010-2013 Jeremy Ashkenas, DocumentCloud Inc.
@@ -3193,7 +3197,7 @@ var wrapError = require('backbone-helpers').wrapError;
 
 Collection.extend = require('backbone-helpers').extend;
 });
-require.register("uritemplate", function(exports, require, module){
+require.register("ericgj-uritemplate/bin/uritemplate.js", function(exports, require, module){
 /*global unescape, module, define, window, global*/
 
 /*
@@ -4081,7 +4085,7 @@ var UriTemplate = (function () {
 ));
 
 });
-require.register("hyperbone-model", function(exports, require, module){
+require.register("green-mesa-hyperbone-model/index.js", function(exports, require, module){
 /*
  * Hyperbone Model
  * 
@@ -4607,7 +4611,7 @@ HyperboneModel.extend = BackboneModel.extend;
 module.exports.Model = HyperboneModel;
 module.exports.Collection = Collection;
 });
-require.register("type", function(exports, require, module){
+require.register("component-type/index.js", function(exports, require, module){
 
 /**
  * toString ref.
@@ -4642,7 +4646,7 @@ module.exports = function(val){
 };
 
 });
-require.register("event", function(exports, require, module){
+require.register("component-event/index.js", function(exports, require, module){
 
 /**
  * Bind `el` event `type` to `fn`.
@@ -4685,7 +4689,7 @@ exports.unbind = function(el, type, fn, capture){
 };
 
 });
-require.register("delegate", function(exports, require, module){
+require.register("component-delegate/index.js", function(exports, require, module){
 
 /**
  * Module dependencies.
@@ -4730,7 +4734,7 @@ exports.unbind = function(el, type, fn, capture){
 };
 
 });
-require.register("indexof", function(exports, require, module){
+require.register("component-indexof/index.js", function(exports, require, module){
 module.exports = function(arr, obj){
   if (arr.indexOf) return arr.indexOf(obj);
   for (var i = 0; i < arr.length; ++i) {
@@ -4739,7 +4743,7 @@ module.exports = function(arr, obj){
   return -1;
 };
 });
-require.register("domify", function(exports, require, module){
+require.register("component-domify/index.js", function(exports, require, module){
 
 /**
  * Expose `parse`.
@@ -4813,7 +4817,7 @@ function parse(html) {
 }
 
 });
-require.register("classes", function(exports, require, module){
+require.register("component-classes/index.js", function(exports, require, module){
 
 /**
  * Module dependencies.
@@ -4981,7 +4985,7 @@ ClassList.prototype.contains = function(name){
 };
 
 });
-require.register("css", function(exports, require, module){
+require.register("component-css/index.js", function(exports, require, module){
 
 /**
  * Properties to ignore appending "px".
@@ -5018,7 +5022,7 @@ module.exports = function(el, obj){
 };
 
 });
-require.register("sort", function(exports, require, module){
+require.register("component-sort/index.js", function(exports, require, module){
 
 /**
  * Expose `sort`.
@@ -5064,7 +5068,7 @@ exports.desc = function(el, fn){
 exports.asc = sort;
 
 });
-require.register("value", function(exports, require, module){
+require.register("green-mesa-value/index.js", function(exports, require, module){
 
 /**
  * Module dependencies.
@@ -5170,7 +5174,7 @@ function type(el) {
 }
 
 });
-require.register("query", function(exports, require, module){
+require.register("component-query/index.js", function(exports, require, module){
 function one(selector, el) {
   return el.querySelector(selector);
 }
@@ -5194,7 +5198,7 @@ exports.engine = function(obj){
 };
 
 });
-require.register("matches-selector", function(exports, require, module){
+require.register("component-matches-selector/index.js", function(exports, require, module){
 /**
  * Module dependencies.
  */
@@ -5242,7 +5246,7 @@ function match(el, selector) {
 }
 
 });
-require.register("traverse", function(exports, require, module){
+require.register("yields-traverse/index.js", function(exports, require, module){
 
 /**
  * dependencies
@@ -5279,7 +5283,7 @@ module.exports = function(type, el, selector, len){
 }
 
 });
-require.register("trim", function(exports, require, module){
+require.register("component-trim/index.js", function(exports, require, module){
 
 exports = module.exports = trim;
 
@@ -5299,7 +5303,7 @@ exports.right = function(str){
 };
 
 });
-require.register("dom", function(exports, require, module){
+require.register("green-mesa-dom/index.js", function(exports, require, module){
 /**
  * Module dependencies.
  */
@@ -6125,10 +6129,10 @@ attrs.forEach(function(name){
 
 
 });
-require.register("model", function(exports, require, module){
+require.register("model/index.js", function(exports, require, module){
 
 });
-require.register("view", function(exports, require, module){
+require.register("view/index.js", function(exports, require, module){
 /*
  *  We want to extend HyperboneView to support various features in TodoMVC. 
  */
@@ -6180,7 +6184,7 @@ View.registerAttributeHandler('dblclicktoedit', function(node, prop, cancel){
 
 module.exports = View.HyperboneView;
 });
-require.register("todomvc-hyperbone", function(exports, require, module){
+require.register("todomvc-hyperbone/index.js", function(exports, require, module){
 
 var View = require('view');
 var Model = require('hyperbone-model').Model;
@@ -6203,6 +6207,7 @@ window.model = new Model({
 	},
 	remaining : 0,
 	completed : 0,
+	"has-items" : false,
 	items : [
 	],
 	_embedded : {
@@ -6249,6 +6254,10 @@ new View({
 	el : dom('#todoapp'), // a reference to our application root.
 
 });
+
+/*
+	Make it visible.
+*/
 
 /*
   Insert business logic here.
@@ -6310,22 +6319,314 @@ model
 		filter.set('selected', 'selected');
 
 	})
-	.on('add:items change:items', function( toDoModel ){
+	.on('remove:items change:items', function( toDoModel ){
 
-		model.set('remaining', model
-								.get('items')
-								.select(function(el){ 
-									return !el.get('completed')
-								})
-								.length);
-		model.set('completed', model
-								.get('items')
-								.select(function(el){ 
-									return el.get('completed')
-								})
-								.length);
+		var length = model.get('items').length;
+		var completed = model
+			.get('items')
+			.select(function(el){ 
+				return el.get('completed')
+			})
+			.length;
+			
+		model.set('completed', completed);
+		model.set('remaining', length - completed);
+		model.set('has-items', length ? true : false);
 
 	});
 
 
 });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+require.alias("green-mesa-hyperbone-view/index.js", "todomvc-hyperbone/deps/hyperbone-view/index.js");
+require.alias("green-mesa-hyperbone-view/index.js", "hyperbone-view/index.js");
+require.alias("components-underscore/underscore.js", "green-mesa-hyperbone-view/deps/underscore/underscore.js");
+require.alias("components-underscore/underscore.js", "green-mesa-hyperbone-view/deps/underscore/index.js");
+require.alias("components-underscore/underscore.js", "components-underscore/index.js");
+require.alias("green-mesa-dom/index.js", "green-mesa-hyperbone-view/deps/dom/index.js");
+require.alias("component-type/index.js", "green-mesa-dom/deps/type/index.js");
+
+require.alias("component-event/index.js", "green-mesa-dom/deps/event/index.js");
+
+require.alias("component-delegate/index.js", "green-mesa-dom/deps/delegate/index.js");
+require.alias("component-matches-selector/index.js", "component-delegate/deps/matches-selector/index.js");
+require.alias("component-query/index.js", "component-matches-selector/deps/query/index.js");
+
+require.alias("component-event/index.js", "component-delegate/deps/event/index.js");
+
+require.alias("component-indexof/index.js", "green-mesa-dom/deps/indexof/index.js");
+
+require.alias("component-domify/index.js", "green-mesa-dom/deps/domify/index.js");
+
+require.alias("component-classes/index.js", "green-mesa-dom/deps/classes/index.js");
+require.alias("component-indexof/index.js", "component-classes/deps/indexof/index.js");
+
+require.alias("component-css/index.js", "green-mesa-dom/deps/css/index.js");
+
+require.alias("component-sort/index.js", "green-mesa-dom/deps/sort/index.js");
+
+require.alias("green-mesa-value/index.js", "green-mesa-dom/deps/value/index.js");
+require.alias("green-mesa-value/index.js", "green-mesa-dom/deps/value/index.js");
+require.alias("component-type/index.js", "green-mesa-value/deps/type/index.js");
+
+require.alias("green-mesa-value/index.js", "green-mesa-value/index.js");
+require.alias("component-query/index.js", "green-mesa-dom/deps/query/index.js");
+
+require.alias("component-matches-selector/index.js", "green-mesa-dom/deps/matches-selector/index.js");
+require.alias("component-query/index.js", "component-matches-selector/deps/query/index.js");
+
+require.alias("yields-traverse/index.js", "green-mesa-dom/deps/traverse/index.js");
+require.alias("yields-traverse/index.js", "green-mesa-dom/deps/traverse/index.js");
+require.alias("component-matches-selector/index.js", "yields-traverse/deps/matches-selector/index.js");
+require.alias("component-query/index.js", "component-matches-selector/deps/query/index.js");
+
+require.alias("yields-traverse/index.js", "yields-traverse/index.js");
+require.alias("component-trim/index.js", "green-mesa-dom/deps/trim/index.js");
+
+require.alias("green-mesa-backbone-events/index.js", "green-mesa-hyperbone-view/deps/backbone-events/index.js");
+require.alias("green-mesa-backbone-events/index.js", "green-mesa-hyperbone-view/deps/backbone-events/index.js");
+require.alias("components-underscore/underscore.js", "green-mesa-backbone-events/deps/underscore/underscore.js");
+require.alias("components-underscore/underscore.js", "green-mesa-backbone-events/deps/underscore/index.js");
+require.alias("components-underscore/underscore.js", "components-underscore/index.js");
+require.alias("green-mesa-backbone-events/index.js", "green-mesa-backbone-events/index.js");
+require.alias("green-mesa-hyperbone-model/index.js", "todomvc-hyperbone/deps/hyperbone-model/index.js");
+require.alias("green-mesa-hyperbone-model/index.js", "hyperbone-model/index.js");
+require.alias("green-mesa-backbone-model/index.js", "green-mesa-hyperbone-model/deps/backbone-model/index.js");
+require.alias("green-mesa-backbone-model/index.js", "green-mesa-hyperbone-model/deps/backbone-model/index.js");
+require.alias("components-underscore/underscore.js", "green-mesa-backbone-model/deps/underscore/underscore.js");
+require.alias("components-underscore/underscore.js", "green-mesa-backbone-model/deps/underscore/index.js");
+require.alias("components-underscore/underscore.js", "components-underscore/index.js");
+require.alias("green-mesa-backbone-events/index.js", "green-mesa-backbone-model/deps/backbone-events/index.js");
+require.alias("green-mesa-backbone-events/index.js", "green-mesa-backbone-model/deps/backbone-events/index.js");
+require.alias("components-underscore/underscore.js", "green-mesa-backbone-events/deps/underscore/underscore.js");
+require.alias("components-underscore/underscore.js", "green-mesa-backbone-events/deps/underscore/index.js");
+require.alias("components-underscore/underscore.js", "components-underscore/index.js");
+require.alias("green-mesa-backbone-events/index.js", "green-mesa-backbone-events/index.js");
+require.alias("green-mesa-backbone-helpers/index.js", "green-mesa-backbone-model/deps/backbone-helpers/index.js");
+require.alias("green-mesa-backbone-helpers/index.js", "green-mesa-backbone-model/deps/backbone-helpers/index.js");
+require.alias("components-underscore/underscore.js", "green-mesa-backbone-helpers/deps/underscore/underscore.js");
+require.alias("components-underscore/underscore.js", "green-mesa-backbone-helpers/deps/underscore/index.js");
+require.alias("components-underscore/underscore.js", "components-underscore/index.js");
+require.alias("green-mesa-backbone-helpers/index.js", "green-mesa-backbone-helpers/index.js");
+require.alias("green-mesa-backbone-model/index.js", "green-mesa-backbone-model/index.js");
+require.alias("green-mesa-backbone-collection/index.js", "green-mesa-hyperbone-model/deps/backbone-collection/index.js");
+require.alias("green-mesa-backbone-collection/index.js", "green-mesa-hyperbone-model/deps/backbone-collection/index.js");
+require.alias("components-underscore/underscore.js", "green-mesa-backbone-collection/deps/underscore/underscore.js");
+require.alias("components-underscore/underscore.js", "green-mesa-backbone-collection/deps/underscore/index.js");
+require.alias("components-underscore/underscore.js", "components-underscore/index.js");
+require.alias("green-mesa-backbone-events/index.js", "green-mesa-backbone-collection/deps/backbone-events/index.js");
+require.alias("green-mesa-backbone-events/index.js", "green-mesa-backbone-collection/deps/backbone-events/index.js");
+require.alias("components-underscore/underscore.js", "green-mesa-backbone-events/deps/underscore/underscore.js");
+require.alias("components-underscore/underscore.js", "green-mesa-backbone-events/deps/underscore/index.js");
+require.alias("components-underscore/underscore.js", "components-underscore/index.js");
+require.alias("green-mesa-backbone-events/index.js", "green-mesa-backbone-events/index.js");
+require.alias("green-mesa-backbone-helpers/index.js", "green-mesa-backbone-collection/deps/backbone-helpers/index.js");
+require.alias("green-mesa-backbone-helpers/index.js", "green-mesa-backbone-collection/deps/backbone-helpers/index.js");
+require.alias("components-underscore/underscore.js", "green-mesa-backbone-helpers/deps/underscore/underscore.js");
+require.alias("components-underscore/underscore.js", "green-mesa-backbone-helpers/deps/underscore/index.js");
+require.alias("components-underscore/underscore.js", "components-underscore/index.js");
+require.alias("green-mesa-backbone-helpers/index.js", "green-mesa-backbone-helpers/index.js");
+require.alias("green-mesa-backbone-model/index.js", "green-mesa-backbone-collection/deps/backbone-model/index.js");
+require.alias("green-mesa-backbone-model/index.js", "green-mesa-backbone-collection/deps/backbone-model/index.js");
+require.alias("components-underscore/underscore.js", "green-mesa-backbone-model/deps/underscore/underscore.js");
+require.alias("components-underscore/underscore.js", "green-mesa-backbone-model/deps/underscore/index.js");
+require.alias("components-underscore/underscore.js", "components-underscore/index.js");
+require.alias("green-mesa-backbone-events/index.js", "green-mesa-backbone-model/deps/backbone-events/index.js");
+require.alias("green-mesa-backbone-events/index.js", "green-mesa-backbone-model/deps/backbone-events/index.js");
+require.alias("components-underscore/underscore.js", "green-mesa-backbone-events/deps/underscore/underscore.js");
+require.alias("components-underscore/underscore.js", "green-mesa-backbone-events/deps/underscore/index.js");
+require.alias("components-underscore/underscore.js", "components-underscore/index.js");
+require.alias("green-mesa-backbone-events/index.js", "green-mesa-backbone-events/index.js");
+require.alias("green-mesa-backbone-helpers/index.js", "green-mesa-backbone-model/deps/backbone-helpers/index.js");
+require.alias("green-mesa-backbone-helpers/index.js", "green-mesa-backbone-model/deps/backbone-helpers/index.js");
+require.alias("components-underscore/underscore.js", "green-mesa-backbone-helpers/deps/underscore/underscore.js");
+require.alias("components-underscore/underscore.js", "green-mesa-backbone-helpers/deps/underscore/index.js");
+require.alias("components-underscore/underscore.js", "components-underscore/index.js");
+require.alias("green-mesa-backbone-helpers/index.js", "green-mesa-backbone-helpers/index.js");
+require.alias("green-mesa-backbone-model/index.js", "green-mesa-backbone-model/index.js");
+require.alias("green-mesa-backbone-collection/index.js", "green-mesa-backbone-collection/index.js");
+require.alias("components-underscore/underscore.js", "green-mesa-hyperbone-model/deps/underscore/underscore.js");
+require.alias("components-underscore/underscore.js", "green-mesa-hyperbone-model/deps/underscore/index.js");
+require.alias("components-underscore/underscore.js", "components-underscore/index.js");
+require.alias("ericgj-uritemplate/bin/uritemplate.js", "green-mesa-hyperbone-model/deps/uritemplate/bin/uritemplate.js");
+require.alias("ericgj-uritemplate/bin/uritemplate.js", "green-mesa-hyperbone-model/deps/uritemplate/index.js");
+require.alias("ericgj-uritemplate/bin/uritemplate.js", "ericgj-uritemplate/index.js");
+require.alias("green-mesa-dom/index.js", "todomvc-hyperbone/deps/dom/index.js");
+require.alias("green-mesa-dom/index.js", "dom/index.js");
+require.alias("component-type/index.js", "green-mesa-dom/deps/type/index.js");
+
+require.alias("component-event/index.js", "green-mesa-dom/deps/event/index.js");
+
+require.alias("component-delegate/index.js", "green-mesa-dom/deps/delegate/index.js");
+require.alias("component-matches-selector/index.js", "component-delegate/deps/matches-selector/index.js");
+require.alias("component-query/index.js", "component-matches-selector/deps/query/index.js");
+
+require.alias("component-event/index.js", "component-delegate/deps/event/index.js");
+
+require.alias("component-indexof/index.js", "green-mesa-dom/deps/indexof/index.js");
+
+require.alias("component-domify/index.js", "green-mesa-dom/deps/domify/index.js");
+
+require.alias("component-classes/index.js", "green-mesa-dom/deps/classes/index.js");
+require.alias("component-indexof/index.js", "component-classes/deps/indexof/index.js");
+
+require.alias("component-css/index.js", "green-mesa-dom/deps/css/index.js");
+
+require.alias("component-sort/index.js", "green-mesa-dom/deps/sort/index.js");
+
+require.alias("green-mesa-value/index.js", "green-mesa-dom/deps/value/index.js");
+require.alias("green-mesa-value/index.js", "green-mesa-dom/deps/value/index.js");
+require.alias("component-type/index.js", "green-mesa-value/deps/type/index.js");
+
+require.alias("green-mesa-value/index.js", "green-mesa-value/index.js");
+require.alias("component-query/index.js", "green-mesa-dom/deps/query/index.js");
+
+require.alias("component-matches-selector/index.js", "green-mesa-dom/deps/matches-selector/index.js");
+require.alias("component-query/index.js", "component-matches-selector/deps/query/index.js");
+
+require.alias("yields-traverse/index.js", "green-mesa-dom/deps/traverse/index.js");
+require.alias("yields-traverse/index.js", "green-mesa-dom/deps/traverse/index.js");
+require.alias("component-matches-selector/index.js", "yields-traverse/deps/matches-selector/index.js");
+require.alias("component-query/index.js", "component-matches-selector/deps/query/index.js");
+
+require.alias("yields-traverse/index.js", "yields-traverse/index.js");
+require.alias("component-trim/index.js", "green-mesa-dom/deps/trim/index.js");
+
+require.alias("model/index.js", "todomvc-hyperbone/deps/model/index.js");
+require.alias("model/index.js", "todomvc-hyperbone/deps/model/index.js");
+require.alias("model/index.js", "model/index.js");
+require.alias("model/index.js", "model/index.js");
+require.alias("view/index.js", "todomvc-hyperbone/deps/view/index.js");
+require.alias("view/index.js", "todomvc-hyperbone/deps/view/index.js");
+require.alias("view/index.js", "view/index.js");
+require.alias("green-mesa-hyperbone-view/index.js", "view/deps/hyperbone-view/index.js");
+require.alias("components-underscore/underscore.js", "green-mesa-hyperbone-view/deps/underscore/underscore.js");
+require.alias("components-underscore/underscore.js", "green-mesa-hyperbone-view/deps/underscore/index.js");
+require.alias("components-underscore/underscore.js", "components-underscore/index.js");
+require.alias("green-mesa-dom/index.js", "green-mesa-hyperbone-view/deps/dom/index.js");
+require.alias("component-type/index.js", "green-mesa-dom/deps/type/index.js");
+
+require.alias("component-event/index.js", "green-mesa-dom/deps/event/index.js");
+
+require.alias("component-delegate/index.js", "green-mesa-dom/deps/delegate/index.js");
+require.alias("component-matches-selector/index.js", "component-delegate/deps/matches-selector/index.js");
+require.alias("component-query/index.js", "component-matches-selector/deps/query/index.js");
+
+require.alias("component-event/index.js", "component-delegate/deps/event/index.js");
+
+require.alias("component-indexof/index.js", "green-mesa-dom/deps/indexof/index.js");
+
+require.alias("component-domify/index.js", "green-mesa-dom/deps/domify/index.js");
+
+require.alias("component-classes/index.js", "green-mesa-dom/deps/classes/index.js");
+require.alias("component-indexof/index.js", "component-classes/deps/indexof/index.js");
+
+require.alias("component-css/index.js", "green-mesa-dom/deps/css/index.js");
+
+require.alias("component-sort/index.js", "green-mesa-dom/deps/sort/index.js");
+
+require.alias("green-mesa-value/index.js", "green-mesa-dom/deps/value/index.js");
+require.alias("green-mesa-value/index.js", "green-mesa-dom/deps/value/index.js");
+require.alias("component-type/index.js", "green-mesa-value/deps/type/index.js");
+
+require.alias("green-mesa-value/index.js", "green-mesa-value/index.js");
+require.alias("component-query/index.js", "green-mesa-dom/deps/query/index.js");
+
+require.alias("component-matches-selector/index.js", "green-mesa-dom/deps/matches-selector/index.js");
+require.alias("component-query/index.js", "component-matches-selector/deps/query/index.js");
+
+require.alias("yields-traverse/index.js", "green-mesa-dom/deps/traverse/index.js");
+require.alias("yields-traverse/index.js", "green-mesa-dom/deps/traverse/index.js");
+require.alias("component-matches-selector/index.js", "yields-traverse/deps/matches-selector/index.js");
+require.alias("component-query/index.js", "component-matches-selector/deps/query/index.js");
+
+require.alias("yields-traverse/index.js", "yields-traverse/index.js");
+require.alias("component-trim/index.js", "green-mesa-dom/deps/trim/index.js");
+
+require.alias("green-mesa-backbone-events/index.js", "green-mesa-hyperbone-view/deps/backbone-events/index.js");
+require.alias("green-mesa-backbone-events/index.js", "green-mesa-hyperbone-view/deps/backbone-events/index.js");
+require.alias("components-underscore/underscore.js", "green-mesa-backbone-events/deps/underscore/underscore.js");
+require.alias("components-underscore/underscore.js", "green-mesa-backbone-events/deps/underscore/index.js");
+require.alias("components-underscore/underscore.js", "components-underscore/index.js");
+require.alias("green-mesa-backbone-events/index.js", "green-mesa-backbone-events/index.js");
+require.alias("green-mesa-dom/index.js", "view/deps/dom/index.js");
+require.alias("component-type/index.js", "green-mesa-dom/deps/type/index.js");
+
+require.alias("component-event/index.js", "green-mesa-dom/deps/event/index.js");
+
+require.alias("component-delegate/index.js", "green-mesa-dom/deps/delegate/index.js");
+require.alias("component-matches-selector/index.js", "component-delegate/deps/matches-selector/index.js");
+require.alias("component-query/index.js", "component-matches-selector/deps/query/index.js");
+
+require.alias("component-event/index.js", "component-delegate/deps/event/index.js");
+
+require.alias("component-indexof/index.js", "green-mesa-dom/deps/indexof/index.js");
+
+require.alias("component-domify/index.js", "green-mesa-dom/deps/domify/index.js");
+
+require.alias("component-classes/index.js", "green-mesa-dom/deps/classes/index.js");
+require.alias("component-indexof/index.js", "component-classes/deps/indexof/index.js");
+
+require.alias("component-css/index.js", "green-mesa-dom/deps/css/index.js");
+
+require.alias("component-sort/index.js", "green-mesa-dom/deps/sort/index.js");
+
+require.alias("green-mesa-value/index.js", "green-mesa-dom/deps/value/index.js");
+require.alias("green-mesa-value/index.js", "green-mesa-dom/deps/value/index.js");
+require.alias("component-type/index.js", "green-mesa-value/deps/type/index.js");
+
+require.alias("green-mesa-value/index.js", "green-mesa-value/index.js");
+require.alias("component-query/index.js", "green-mesa-dom/deps/query/index.js");
+
+require.alias("component-matches-selector/index.js", "green-mesa-dom/deps/matches-selector/index.js");
+require.alias("component-query/index.js", "component-matches-selector/deps/query/index.js");
+
+require.alias("yields-traverse/index.js", "green-mesa-dom/deps/traverse/index.js");
+require.alias("yields-traverse/index.js", "green-mesa-dom/deps/traverse/index.js");
+require.alias("component-matches-selector/index.js", "yields-traverse/deps/matches-selector/index.js");
+require.alias("component-query/index.js", "component-matches-selector/deps/query/index.js");
+
+require.alias("yields-traverse/index.js", "yields-traverse/index.js");
+require.alias("component-trim/index.js", "green-mesa-dom/deps/trim/index.js");
+
+require.alias("view/index.js", "view/index.js");
+require.alias("todomvc-hyperbone/index.js", "todomvc-hyperbone/index.js");

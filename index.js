@@ -20,6 +20,7 @@ window.model = new Model({
 	},
 	remaining : 0,
 	completed : 0,
+	"has-items" : false,
 	items : [
 	],
 	_embedded : {
@@ -66,6 +67,10 @@ new View({
 	el : dom('#todoapp'), // a reference to our application root.
 
 });
+
+/*
+	Make it visible.
+*/
 
 /*
   Insert business logic here.
@@ -127,20 +132,19 @@ model
 		filter.set('selected', 'selected');
 
 	})
-	.on('add:items change:items', function( toDoModel ){
+	.on('remove:items change:items', function( toDoModel ){
 
-		model.set('remaining', model
-								.get('items')
-								.select(function(el){ 
-									return !el.get('completed')
-								})
-								.length);
-		model.set('completed', model
-								.get('items')
-								.select(function(el){ 
-									return el.get('completed')
-								})
-								.length);
+		var length = model.get('items').length;
+		var completed = model
+			.get('items')
+			.select(function(el){ 
+				return el.get('completed')
+			})
+			.length;
+			
+		model.set('completed', completed);
+		model.set('remaining', length - completed);
+		model.set('has-items', length ? true : false);
 
 	});
 
