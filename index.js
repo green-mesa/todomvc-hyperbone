@@ -3,72 +3,70 @@ var Model = require('hyperbone-model').Model;
 window.dom = require('dom');
 
 /*
- * Add some extensions to hyperbone view. First pluralise.
+ * Add an extensions to hyperbone view. First pluralise.
  */
 
 require('hyperbone-view').registerHelper('pluralise', function( attr, str ){
 	return (attr==1 ? str : str + "s");
 });
-
-/*
- * Then 'if'. Would you believe it there isn't an 'if' directive in hyperbone view yet.
- */
-
-require('hyperbone-view').registerAttributeHandler('if', function( node, prop, cancel ){
-
-	var self = this, 
-		test = function(){
-			dom(node).css({display: ( self.model.get(prop)!==0 ? '': 'none') });	
-		};
-
-	this.model.on('change:' + prop, function(){ test() });
-	// do the initial state.
-	test();
-
-});
-
 /*
  * Create a model with one default item already in it.
  */
 
-var model = new Model({
+window.model = new Model({
+	_links : {
+		self : {
+			href : "/"
+		}
+	},
 	remaining : 0,
-	completed : 1,
+	completed : 0,
 	items : [
-	{
-		completed : "completed",
-		task : "Something"
+	],
+	_embedded : {
+		filters : [
+			{
+				_links : {
+					self : {
+						href : '/#!/all'
+					}
+				},
+				selected : 'selected',
+				description : "All"
+			},
+			{
+				_links : {
+					self : {
+						href : '/#!/active'
+					}
+				},
+				selected : '',
+				description : "Active"
+			},
+			{
+				_links : {
+					self : {
+						href : '/#!/completed'
+					}
+				},
+				selected : '',
+				description : "Completed"
+			},
+		]
 	}
-	]
 });
 
 /*
- * Bind to collection add/remove/change events to update calulations
- */
-
-model.on('list-updated change:items', function(){
-
-	// turns out we don't get a generic 'change' event when a collection has been changed. Only changes
-	// this callback never fires...
-	model.set('remaining', model
-							.get('items')
-							.select(function(el){ 
-								return !el.get('completed')
-							})
-							.length);
-
-	model.set('completed', model
-							.get('items')
-							.select(function(el){ 
-								return el.get('completed')
-							})
-							.length);
-});
+  Create our view...
+*/
 
 new View({
+
 	model : model, // our model
+
 	el : dom('#todoapp'), // a reference to our application root.
-	delegates : { // delegates to capture
+
+	delegates : { // one delegate, just to capture keypress.
 		'keypress #new-todo' : function(e){
 			if(e.which===13){
 				model.get('items').add({
@@ -76,34 +74,90 @@ new View({
 					task : dom('#new-todo').val()
 				});
 
-				model.trigger('list-updated');
 				dom('#new-todo').val("");
 			}
-		},
-		'click button.destroy' : function(e, item){
-
-			model.get('items').remove(item);
-			model.trigger('list-updated');
-			debugger;
-		},
-		'click #clear-completed' : function(e){
-			// this has exposed a bug in the collection handling stuff. If you try to set an existing collection
-			// with an array of models... it's maximum call stack time. Shittington.
-			var remaining = model.get('items').select(function(el){ return el.get('completed'); })
-			model.get('items').remove(remaining);
-
-			model.trigger('list-updated');
-
 		}
 
 	}
+
 });
 
-
 /*
-  
-  Bug list:
-  - add/remove to a collection is not firing add/remove or change events. Only changing an element of the collection fires
-  - delegates need to be actual delegates. Dynamic nodes 
-
+  Insert business logic here.
 */
+
+model
+	.on('toggle-all', function(model, val){
+
+		model.get('items').each(function(item){
+
+			item.set('completed', (item.get('completed') ? '' : 'completed'));
+
+		});
+
+	})
+	.on('clear-completed', function(){
+
+		/*
+		 * We can't destroy elements without disrupting the iterator
+		 * So we'll make an array of functions instead..
+		 */
+
+		var events = [];
+
+		model.get('items').each(function(item){
+
+			if(item.get('completed')){
+
+				events.push(function(){
+					item.destroy();
+				});
+			}
+
+		});
+
+		/*
+		 * Then run them.
+		 */ 
+		events.forEach(function(fn){
+			fn();
+		})
+		
+
+	})
+	.on('filters-changed:filters', function( filter ){
+		/*
+		 * When an hb-trigger event is fired
+		 */
+
+		model.get('filters').each(function(filter){
+
+			if(filter.get('selected')){ 
+				filter.set('selected', ''); 
+			};
+
+		});
+
+		filter.set('selected', 'selected');
+
+	})
+	.on('add:items change:items', function( toDoModel ){
+
+		// update completed/remaining
+		model.set('remaining', model
+								.get('items')
+								.select(function(el){ 
+									return !el.get('completed')
+								})
+								.length);
+		model.set('completed', model
+								.get('items')
+								.select(function(el){ 
+									return el.get('completed')
+								})
+								.length);
+
+	});
+
+
+

@@ -3,7 +3,7 @@
 	<head>
 		<meta charset="utf-8">
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
-		<title>Backbone.js • TodoMVC</title>
+		<title>Hyperbone • TodoMVC</title>
 		<link rel="stylesheet" href="bower_components/todomvc-common/base.css">
 	</head>
 	<body>
@@ -13,37 +13,31 @@
 				<input id="new-todo" placeholder="What needs to be done?" autofocus>
 			</header>
 			<section id="main">
-				<input id="toggle-all" type="checkbox">
+				<input id="toggle-all" type="checkbox" hb-trigger="toggle-all">
 				<label for="toggle-all">Mark all as complete</label>
 				<ul id="todo-list" hb-with="items">
 					<li class="{{completed}}">
 						<div class="view">
 							<input class="toggle" type="checkbox" value="completed" hb-bind="completed">
 							<label>{{task}}</label>
-							<button class="destroy" hb-get-item></button>
+							<button class="destroy" hb-trigger="destroy"></button>
 						</div>
 					</li>
 				</ul>
 			</section>
 			<footer id="footer">
 				<span id="todo-count"><strong>{{remaining}}</strong> {{pluralise(model.get('remaining'), 'item')}} left</span>
-				<ul id="filters">
+				<ul id="filters" hb-with="filters">
 					<li>
-						<a class="selected" href="#/">All</a>
-					</li>
-					<li>
-						<a href="#/active">Active</a>
-					</li>
-					<li>
-						<a href="#/completed">Completed</a>
+						<a class="{{selected}}" rel="self" hb-trigger="filters-changed">{{description}}</a>
 					</li>
 				</ul>
-				<button if="completed" id="clear-completed">Clear completed ({{completed}})</button>
+				<button if="completed" hb-trigger="clear-completed" id="clear-completed">Clear completed ({{completed}})</button>
 			</footer>
 		</section>
 		<footer id="info">
 			<p>Double-click to edit a todo</p>
-			<p>Written by <a href="https://github.com/addyosmani">Addy Osmani</a></p>
+			<p>Written by <a href="https://github.com/CharlotteGore">Charlotte Gore</a></p>
 			<p>Part of <a href="http://todomvc.com">TodoMVC</a></p>
 		</footer>
 		<script src="build/build.js"></script>
