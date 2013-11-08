@@ -10,18 +10,19 @@
 		<section id="todoapp">
 			<header id="header">
 				<h1>todos</h1>
-				<input id="new-todo" placeholder="What needs to be done?" autofocus>
+				<input id="new-todo" hb-bind="new-task" placeholder="What needs to be done?" autofocus>
 			</header>
 			<section id="main">
 				<input id="toggle-all" type="checkbox" hb-trigger="toggle-all">
 				<label for="toggle-all">Mark all as complete</label>
 				<ul id="todo-list" hb-with="items">
-					<li class="{{completed}}">
+					<li dblclicktoedit class="{{completed}} {{editing}}">
 						<div class="view">
 							<input class="toggle" type="checkbox" value="completed" hb-bind="completed">
 							<label>{{task}}</label>
 							<button class="destroy" hb-trigger="destroy"></button>
 						</div>
+						<input class="edit" hb-bind="task">
 					</li>
 				</ul>
 			</section>
@@ -40,7 +41,7 @@
 			<p>Written by <a href="https://github.com/CharlotteGore">Charlotte Gore</a></p>
 			<p>Part of <a href="http://todomvc.com">TodoMVC</a></p>
 		</footer>
-		<script src="build/build.js"></script>
+		<script src="build/build.min.js"></script>
 		<script>require('todomvc-hyperbone')</script>
 	</body>
 </html>

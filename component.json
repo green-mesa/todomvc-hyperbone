@@ -14,5 +14,11 @@
   "main": "index.js",
   "scripts": [
     "index.js"
+  ],
+  "paths" : [
+    "local"
+  ],
+  "local" : [
+    "model", "view"
   ]
 }
