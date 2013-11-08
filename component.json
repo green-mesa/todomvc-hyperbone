@@ -5,9 +5,6 @@
   "version": "0.0.1",
   "keywords": [],
   "dependencies": {
-    "green-mesa/hyperbone-view" : "*",
-    "green-mesa/hyperbone-model" : "*",
-    "green-mesa/dom" : "*"
   },
   "development": {},
   "license": "MIT",

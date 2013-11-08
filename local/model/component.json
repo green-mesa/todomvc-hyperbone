@@ -4,7 +4,9 @@
   "description": "The model",
   "version": "0.0.1",
   "keywords": [],
-  "dependencies": {},
+  "dependencies": {
+    "green-mesa/hyperbone-model" : "*"
+    },
   "development": {},
   "license": "MIT",
   "main": "index.js",
