@@ -5,17 +5,20 @@
   "version": "0.0.1",
   "keywords": [],
   "dependencies": {
+    "green-mesa/dom" : "*",
+    "green-mesa/hyperbone-view" : "*",
+    "green-mesa/hyperbone-model" : "*"
   },
   "development": {},
   "license": "MIT",
   "main": "index.js",
   "scripts": [
-    "index.js"
+    "js/app.js"
   ],
   "paths" : [
-    "local"
+    "js/local"
   ],
   "local" : [
-    "model", "view"
+    "extended-view", "app-model"
   ]
 }

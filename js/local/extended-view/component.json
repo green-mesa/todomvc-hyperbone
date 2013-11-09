@@ -1,0 +1,6 @@
+{
+	"name" : "extended-view",
+	"scripts" : [
+		"index.js"
+	]
+}

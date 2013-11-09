@@ -1,9 +1,9 @@
 
-build: components index.js
-	@component build --dev
+build: components js/app.js
+	@component build && flatinator -n todomvc --app todomvc-hyperbone
 
 components: component.json
-	@component install --dev
+	@component install
 
 clean:
 	rm -fr build components template.js

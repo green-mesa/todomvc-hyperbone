@@ -1,0 +1,6 @@
+{
+	"name" : "todo-model",
+	"scripts" : [
+		"index.js"
+	]
+}

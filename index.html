@@ -18,7 +18,7 @@
 				<input id="toggle-all" type="checkbox" hb-trigger="toggle-all">
 				<label for="toggle-all">Mark all as complete</label>
 				<ul id="todo-list" hb-with="items">
-					<li dblclicktoedit class="{{completed}} {{editing}}">
+					<li dblclicktoedit="edit" class="{{if(model.get('completed'), 'completed')}} {{if(model.get('editing'), 'editing')}}">
 						<div class="view">
 							<input class="toggle" type="checkbox" value="completed" hb-bind="completed">
 							<label>{{task}}</label>
@@ -32,7 +32,7 @@
 				<span id="todo-count"><strong>{{remaining}}</strong> {{pluralise(model.get('remaining'), 'item')}} left</span>
 				<ul id="filters" hb-with="filters">
 					<li>
-						<a class="{{selected}}" rel="self" hb-trigger="filters-changed">{{description}}</a>
+						<a class="{{if(model.get('selected'), 'selected')}}" rel="self" hb-trigger="filters-changed">{{description}}</a>
 					</li>
 				</ul>
 				<button if="completed" hb-trigger="clear-completed" id="clear-completed">Clear completed ({{completed}})</button>
@@ -43,7 +43,6 @@
 			<p>Written by <a href="https://github.com/CharlotteGore">Charlotte Gore</a></p>
 			<p>Part of <a href="http://todomvc.com">TodoMVC</a></p>
 		</footer>
-		<script src="build/build.js"></script>
-		<script>new (require('todomvc-hyperbone'))</script>
+		<script src="todomvc.min.js"></script>
 	</body>
 </html>

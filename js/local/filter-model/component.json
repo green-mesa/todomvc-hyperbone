@@ -1,0 +1,6 @@
+{
+	"name" : "filter-model",
+	"scripts" : [
+		"index.js"
+	]
+}

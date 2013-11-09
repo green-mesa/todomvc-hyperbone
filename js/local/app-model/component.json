@@ -1,0 +1,12 @@
+{
+	"name" : "app-model",
+	"scripts" : [
+		"index.js"
+	],
+	"paths" : [
+		".."
+	],
+	"local" : [
+		"filter-model", "todo-model"
+	]
+}
